@@ -71,6 +71,10 @@ const gameOfLife = {
     let stepButton = document.querySelector('#step_btn')
     stepButton.addEventListener('click',()=>this.step())
 
+    //AUTO
+    let autoButton = document.querySelector('#auto_btn')
+    autoButton.addEventListener('click',()=>this.enableAutoPlay())
+
   },
 
   clear: function(){
@@ -143,8 +147,20 @@ const gameOfLife = {
   },
 
   enableAutoPlay: function () {
-    
+    const btn = document.getElementById('auto_btn')
+    if(this.stepInterval){
+      this.stopAutoplay()
+      btn.innerText = 'auto'
+    } else {
+      this.stepInterval = setInterval(() => this.step(),500)
+      btn.innerText = 'pause'
+    }
   },
+
+  stopAutoplay: function(){
+    clearInterval(this.stepInterval)
+    this.stepInterval=null
+  }
 };
 
 gameOfLife.createAndShowBoard();
